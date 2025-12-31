@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JEE Mains Practice Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         /* All your CSS styles remain the same */
         * {
@@ -19,6 +22,29 @@
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
+        }
+        
+        .pdf-button {
+            background: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pdf-button:hover {
+            background: #c82333;
+        }
+        .results-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
         }
         
         /* Welcome Page Styles */
@@ -1030,15 +1056,6 @@
         let timeLeft = TEST_DURATION;
         let timerInterval;
         
-        // Question data - AUTO-GENERATED for 75 questions
-        const questions = [];
-        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
-            questions.push({
-                image: `${i}.png`,
-                options: ["A", "B", "C", "D"]
-            });
-        }
-        
         // Create floating hearts for welcome page
         function createFloatingHearts() {
             const container = document.getElementById('floating-hearts');
@@ -1195,7 +1212,6 @@
             visitedQuestions[index] = true;
             
             const questionArea = document.getElementById('question-area');
-            const question = questions[index];
             const questionNumber = index + 1;
             const isIntegerType = isIntegerQuestion(questionNumber);
             
@@ -1212,7 +1228,7 @@
                     </div>
                     
                     <div class="question-image-container">
-                        <img src="${question.image}" alt="Question ${questionNumber}" class="question-image" 
+                        <img src="${questionNumber}.png" alt="Question ${questionNumber}" class="question-image" 
                              onerror="this.onerror=null; this.src='https://via.placeholder.com/800x300/667eea/ffffff?text=Question+${questionNumber}+Image'">
                     </div>`;
             
@@ -1233,11 +1249,11 @@
                 // MCQ type question
                 questionHTML += `
                     <div class="options-container">
-                        ${question.options.map((option, optIndex) => `
+                        ${['A', 'B', 'C', 'D'].map((option, optIndex) => `
                             <div class="option-row ${userAnswers[index] === optIndex ? 'selected' : ''}" 
                                  onclick="selectOption(${index}, ${optIndex})">
-                                <div class="option-label">${String.fromCharCode(65 + optIndex)}</div>
-                                <div class="option-text">Option ${String.fromCharCode(65 + optIndex)}</div>
+                                <div class="option-label">${option}</div>
+                                <div class="option-text">Option ${option}</div>
                             </div>
                         `).join('')}
                     </div>`;
@@ -1412,6 +1428,9 @@
                         <button onclick="showDetailedAnalysis()" style="padding: 15px 30px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
                             View Detailed Analysis 📊
                         </button>
+                        <button onclick="downloadAnalysisPDF()" style="padding: 15px 30px; background: linear-gradient(45deg, #dc3545, #c82333); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
+                            <i class="fas fa-file-pdf"></i> Download PDF Report
+                        </button>
                         <button onclick="window.location.reload()" style="padding: 15px 30px; background: linear-gradient(45deg, #ff4081, #ff9100); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600;">
                             Take Test Again 🔄
                         </button>
@@ -1477,6 +1496,196 @@
             };
         }
         
+        // ============== PDF ANALYSIS FUNCTION ==============
+        function downloadAnalysisPDF() {
+            // Create new PDF document
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            
+            // PDF settings
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 20;
+            let yPosition = margin;
+            
+            // Calculate score
+            const score = calculateScore();
+            const userName = "Himani Saini";
+            const totalQuestions = TOTAL_QUESTIONS;
+            const accuracy = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
+            
+            // ============== HEADER SECTION ==============
+            doc.setFontSize(24);
+            doc.setTextColor(46, 125, 50); // Green color
+            doc.text("JEE MAINS TEST ANALYSIS REPORT", pageWidth/2, yPosition, { align: 'center' });
+            yPosition += 15;
+            
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Candidate: ${userName}`, margin, yPosition);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, pageWidth - margin, yPosition, { align: 'right' });
+            yPosition += 8;
+            doc.text(`Score: ${score.correct}/${totalQuestions} (${accuracy}%)`, margin, yPosition);
+            doc.text(`Total Marks: ${score.totalMarks}/${score.maxMarks}`, pageWidth - margin, yPosition, { align: 'right' });
+            yPosition += 15;
+            
+            // ============== SCORE SUMMARY ==============
+            doc.setDrawColor(46, 125, 50);
+            doc.setFillColor(232, 245, 232);
+            doc.rect(margin, yPosition, pageWidth - 2*margin, 30, 'F');
+            
+            doc.setFontSize(16);
+            doc.setTextColor(46, 125, 50);
+            doc.text("SCORE SUMMARY", margin + 10, yPosition + 10);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            const summaryY = yPosition + 20;
+            doc.text(`Correct Answers: ${score.correct} (+${score.correct * 4} marks)`, margin + 10, summaryY);
+            doc.text(`Incorrect: ${score.incorrect} (-${score.incorrect} marks)`, margin + 80, summaryY);
+            doc.text(`Accuracy: ${accuracy}%`, margin + 140, summaryY);
+            
+            yPosition += 40;
+            
+            // ============== DETAILED ANALYSIS ==============
+            doc.setFontSize(18);
+            doc.setTextColor(0, 0, 0);
+            doc.text("DETAILED QUESTION ANALYSIS", margin, yPosition);
+            yPosition += 12;
+            
+            // Draw separator line
+            doc.setDrawColor(200, 200, 200);
+            doc.line(margin, yPosition, pageWidth - margin, yPosition);
+            yPosition += 15;
+            
+            // ============== LOOP THROUGH QUESTIONS ==============
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                // Check if we need new page
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = margin;
+                }
+                
+                const questionNum = i + 1;
+                const userAnswer = userAnswers[i];
+                const correctAnswer = ANSWER_KEY[i];
+                const isIntegerType = isIntegerQuestion(questionNum);
+                const marked = markedQuestions[i];
+                
+                // Determine if answer is correct
+                let isCorrect = false;
+                if (userAnswer !== null) {
+                    if (isIntegerType) {
+                        isCorrect = parseInt(userAnswer) === correctAnswer;
+                    } else {
+                        const userAnswerLetter = String.fromCharCode(65 + userAnswer);
+                        isCorrect = userAnswerLetter === correctAnswer;
+                    }
+                }
+                
+                // Question number and status
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text(`Q${questionNum}:`, margin, yPosition);
+                
+                // Question status
+                doc.setFontSize(10);
+                if (marked) {
+                    doc.setTextColor(33, 150, 243); // Blue for marked
+                    doc.text("(Marked)", margin + 20, yPosition);
+                } else if (userAnswer === null) {
+                    doc.setTextColor(117, 117, 117); // Gray for unattempted
+                    doc.text("(Unattempted)", margin + 20, yPosition);
+                } else if (isCorrect) {
+                    doc.setTextColor(46, 125, 50); // Green for correct
+                    doc.text("(Correct +4)", margin + 20, yPosition);
+                } else {
+                    doc.setTextColor(198, 40, 40); // Red for incorrect
+                    doc.text("(Incorrect -1)", margin + 20, yPosition);
+                }
+                doc.setTextColor(0, 0, 0); // Reset color
+                
+                yPosition += 8;
+                
+                // Question type
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text(`Type: ${isIntegerType ? 'Integer' : 'MCQ'}`, margin, yPosition);
+                yPosition += 5;
+                
+                // Your answer
+                let userAnswerText = 'Not Attempted';
+                if (userAnswer !== null) {
+                    if (isIntegerType) {
+                        userAnswerText = userAnswer.toString();
+                    } else {
+                        userAnswerText = String.fromCharCode(65 + userAnswer);
+                    }
+                }
+                doc.text(`Your Answer: ${userAnswerText}`, margin, yPosition);
+                yPosition += 5;
+                
+                // Correct answer
+                let correctAnswerText = isIntegerType ? correctAnswer.toString() : correctAnswer;
+                doc.text(`Correct Answer: ${correctAnswerText}`, margin, yPosition);
+                
+                yPosition += 15;
+                
+                // Separator between questions
+                if (i < TOTAL_QUESTIONS - 1) {
+                    doc.setDrawColor(220, 220, 220);
+                    doc.line(margin, yPosition - 5, pageWidth - margin, yPosition - 5);
+                    yPosition += 10;
+                }
+            }
+            
+            // ============== FINAL STATISTICS ==============
+            doc.addPage();
+            yPosition = margin;
+            
+            doc.setFontSize(24);
+            doc.setTextColor(46, 125, 50);
+            doc.text("TEST STATISTICS SUMMARY", pageWidth/2, yPosition, { align: 'center' });
+            yPosition += 20;
+            
+            // Create statistics table
+            const stats = [
+                ['Correct Answers', score.correct, `+${score.correct * 4} marks`],
+                ['Incorrect Answers', score.incorrect, `-${score.incorrect} marks`],
+                ['Unattempted', score.unattempted, '0 marks'],
+                ['Marked Questions', score.marked, ''],
+                ['Total Questions', totalQuestions, ''],
+                ['Final Score', `${score.totalMarks}/${score.maxMarks}`, `${accuracy}%`]
+            ];
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            stats.forEach((stat, index) => {
+                const startY = yPosition + (index * 15);
+                doc.text(stat[0], margin, startY);
+                doc.text(stat[1].toString(), margin + 100, startY);
+                doc.text(stat[2], margin + 140, startY);
+            });
+            
+            yPosition += 100;
+            
+            // ============== FOOTER ==============
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text(
+                `Generated on ${new Date().toLocaleString()} • JEE Mains Practice Test Platform`,
+                pageWidth/2,
+                290,
+                { align: 'center' }
+            );
+            
+            // ============== SAVE PDF ==============
+            const fileName = `${userName.replace(/\s+/g, '_')}_JEE_Analysis_${Date.now()}.pdf`;
+            doc.save(fileName);
+            
+            alert(`PDF report downloaded as "${fileName}"`);
+        }
+        
         // Show detailed analysis
         function showDetailedAnalysis() {
             document.getElementById('test-page').style.display = 'none';
@@ -1484,6 +1693,7 @@
             
             const analysisContainer = document.querySelector('.analysis-container');
             const score = calculateScore();
+            const userName = "Himani Saini";
             
             analysisContainer.innerHTML = `
                 <div class="score-header">
@@ -1512,6 +1722,12 @@
                         <div class="score-label">Unattempted</div>
                         <div style="font-size: 12px; margin-top: 5px;">0 marks</div>
                     </div>
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <button onclick="downloadAnalysisPDF()" class="pdf-button">
+                        <i class="fas fa-file-pdf"></i> Download PDF Analysis Report
+                    </button>
                 </div>
                 
                 <div class="questions-analysis">
@@ -1573,6 +1789,7 @@
             const userAnswer = userAnswers[questionIndex];
             const correctAnswer = ANSWER_KEY[questionIndex];
             const isInteger = isIntegerQuestion(questionNum);
+            const marked = markedQuestions[questionIndex];
             
             let userAnswerText = 'Not Attempted';
             if (userAnswer !== null) {
@@ -1605,7 +1822,7 @@
                         <span style="color: ${isCorrect ? '#4caf50' : (userAnswer === null ? '#757575' : '#f44336')}; font-weight: bold;">
                             ${isCorrect ? '✅ Correct (+4)' : (userAnswer === null ? '❓ Unattempted (0)' : '❌ Incorrect (-1)')}
                         </span>
-                        ${markedQuestions[questionIndex] ? '<span style="color: #2196f3; font-weight: bold;">📍 Marked</span>' : ''}
+                        ${marked ? '<span style="color: #2196f3; font-weight: bold;">📍 Marked</span>' : ''}
                     </div>
                 </div>
                 
