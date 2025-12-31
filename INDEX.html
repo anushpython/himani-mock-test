@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Mains Practice Test</title>
+    <style>
+        /* All your CSS styles remain the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Welcome Page Styles */
+        #welcome-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .welcome-container {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .love-heart {
+            font-size: 80px;
+            color: #ff4081;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s ease infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .welcome-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff4081, #ff9100);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255,64,129,0.3);
+        }
+        
+        .name-highlight {
+            color: #ff4081;
+            font-size: 56px;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255,64,129,0.7);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff4081; }
+            to { text-shadow: 0 0 20px #ff4081, 0 0 30px #ff4081; }
+        }
+        
+        .message {
+            font-size: 20px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        
+        .creator {
+            font-size: 18px;
+            color: #ff9100;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        .start-btn {
+            margin-top: 40px;
+            padding: 18px 50px;
+            font-size: 22px;
+            background: linear-gradient(45deg, #ff4081, #ff9100);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,64,129,0.4);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,64,129,0.6);
+        }
+        
+        /* Floating Hearts Animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: float 15s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Test Page Styles */
+        #test-page {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .test-main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Question Palette Sidebar */
+        .question-palette {
+            width: 400px;
+            background-color: white;
+            padding: 20px 15px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+        
+        .palette-header {
+            background: linear-gradient(45deg, #ff4081, #ff9100);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .palette-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .status-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .status-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .answered { background-color: #4caf50 !important; color: white !important; }
+        .unanswered { background-color: #f44336 !important; color: white !important; }
+        .marked { background-color: #2196f3 !important; color: white !important; }
+        .not-visited { background-color: #f5f5f5 !important; color: #333 !important; }
+        .current { border: 3px solid #ff9800 !important; box-shadow: 0 0 5px #ff9800; }
+        .integer-type { border: 2px dashed #9c27b0 !important; }
+        
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .question-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            transition: all 0.2s;
+            background-color: #f5f5f5;
+            font-size: 14px;
+        }
+        
+        .question-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .mark-btn {
+            background: linear-gradient(45deg, #2196f3, #21CBF3);
+            color: white;
+        }
+        
+        .mark-btn:hover {
+            background: linear-gradient(45deg, #1976d2, #00BCD4);
+        }
+        
+        .clear-btn {
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background: linear-gradient(45deg, #f57c00, #e64a19);
+        }
+        
+        /* Main container */
+        .test-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: rgba(0,0,0,0.2);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .question-area-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .question-counter {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(45deg, #4caf50, #2e7d32);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .time-warning {
+            color: #ff5722;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        .question-container {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #764ba2;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-type {
+            font-size: 14px;
+            color: #ff4081;
+            font-weight: bold;
+            padding: 4px 12px;
+            background: rgba(255, 64, 129, 0.1);
+            border-radius: 20px;
+        }
+        
+        .question-image {
+            max-width: 100%;
+            margin: 15px 0;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            max-height: 300px;
+            object-fit: contain;
+        }
+        
+        .options-container {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .option-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 45px;
+        }
+        
+        .option-row:hover {
+            background-color: #f0f4ff;
+            border-color: #9fa8da;
+        }
+        
+        .option-row.selected {
+            background-color: #e8eaf6;
+            border-color: #3f51b5;
+        }
+        
+        .option-label {
+            width: 35px;
+            font-weight: 600;
+            color: #3f51b5;
+            font-size: 16px;
+        }
+        
+        .option-text {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        /* Integer Input Container */
+        .integer-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .integer-box {
+            width: 200px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            border: 3px solid #9c27b0;
+            border-radius: 10px;
+            margin: 10px auto;
+            padding: 10px;
+            font-weight: bold;
+            color: #9c27b0;
+            transition: all 0.3s;
+        }
+        
+        .integer-box:focus {
+            outline: none;
+            border-color: #673ab7;
+            box-shadow: 0 0 15px rgba(156, 39, 176, 0.3);
+        }
+        
+        .integer-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+        
+        .nav-button {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        #submit-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        #submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        /* Modal for final submission */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+        
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .stat-box {
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .stat-answered { background: linear-gradient(45deg, #4caf50, #2e7d32); }
+        .stat-unanswered { background: linear-gradient(45deg, #f44336, #c62828); }
+        .stat-marked { background: linear-gradient(45deg, #2196f3, #1565c0); }
+        .stat-not-visited { background: linear-gradient(45deg, #757575, #424242); }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .modal-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .modal-submit {
+            background: linear-gradient(45deg, #4caf50, #2e7d32);
+            color: white;
+        }
+        
+        /* Analysis Page Styles */
+        #analysis-page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .analysis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .score-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+        
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .score-item {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        
+        .score-item.correct {
+            background: linear-gradient(45deg, #4caf50, #2e7d32);
+        }
+        
+        .score-item.incorrect {
+            background: linear-gradient(45deg, #f44336, #c62828);
+        }
+        
+        .score-item.unattempted {
+            background: linear-gradient(45deg, #757575, #424242);
+        }
+        
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .score-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .analysis-question-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .analysis-question-box.correct {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .analysis-question-box.incorrect {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .analysis-question-box.unattempted {
+            background-color: #757575;
+            color: white;
+        }
+        
+        .analysis-question-box.marked {
+            border-color: #2196f3;
+        }
+        
+        .analysis-question-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .marking-system {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .marking-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .question-detail {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #fafafa;
+        }
+        
+        .question-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 1200px) {
+            .question-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .analysis-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .test-main-container {
+                flex-direction: column;
+            }
+            
+            .question-palette {
+                width: 100%;
+                max-height: 400px;
+                order: 2;
+                position: relative;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+            
+            .analysis-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            
+            .score-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 36px;
+            }
+            
+            .name-highlight {
+                font-size: 42px;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .nav-button {
+                padding: 10px 20px;
+            }
+            
+            .status-legend {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-box {
+                width: 35px;
+                height: 35px;
+                font-size: 13px;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .marking-system {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 28px;
+            }
+            
+            .name-highlight {
+                font-size: 32px;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .question-box {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div id="welcome-page">
+        <div class="floating-hearts" id="floating-hearts"></div>
+        <div class="welcome-container">
+            <div class="love-heart">❤️</div>
+            <h1 class="welcome-title">Welcome <span class="name-highlight">Himani Saini</span> 💖</h1>
+            
+            <div class="message">
+                <p>Welcome to your personalized JEE Mains Mock Test Platform! ✨</p>
+                <p style="margin: 15px 0; font-size: 22px; color: #ffd700;">"Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle." 🌟</p>
+                <p>This platform is specially crafted with love to help you ace your preparation. Every question, every timer tick, is designed with your success in mind.</p>
+            </div>
+            
+            <div class="creator">
+                <p>Made with 💖 by <strong style="color: #00bcd4;">ANUSH</strong></p>
+                <p style="font-size: 16px; margin-top: 10px;">Just for you, my star ✨</p>
+            </div>
+            
+            <button class="start-btn" id="start-test-btn">
+                Start Your Test 🚀
+            </button>
+            
+            <div style="margin-top: 30px; font-size: 14px; color: rgba(255,255,255,0.7);">
+                <p>⏰ 75 Questions • 3 Hours • MCQ + Integer Type</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Test Page -->
+    <div id="test-page">
+        <div class="test-main-container">
+            <!-- Question Palette Sidebar -->
+            <div class="question-palette">
+                <div class="palette-header">
+                    <h3>Question Palette (75 Questions)</h3>
+                </div>
+                
+                <div class="status-legend">
+                    <div class="status-item">
+                        <div class="status-color answered"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color unanswered"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color marked"></div>
+                        <span>Marked</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color not-visited"></div>
+                        <span>Not Visited</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color" style="background-color: white; border: 2px dashed #9c27b0;"></div>
+                        <span>Integer Type</span>
+                    </div>
+                </div>
+                
+                <div class="question-grid" id="question-grid">
+                    <!-- Questions will be generated here -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn mark-btn" onclick="markQuestion()">
+                        Mark for Review & Next
+                    </button>
+                    <button class="action-btn clear-btn" onclick="clearResponse()">
+                        Clear Response
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Test Container -->
+            <div class="test-container">
+                <div class="header">
+                    <h1>JEE Mains Practice Test 💖</h1>
+                    <div class="timer" id="timer">180:00</div>
+                </div>
+                
+                <div class="question-area-container">
+                    <div class="question-counter">
+                        Question <span id="current-q">1</span> of <span id="total-q">75</span>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                    
+                    <div class="time-warning" id="time-warning">
+                        ⚠️ Only 30 minutes remaining!
+                    </div>
+                    
+                    <!-- Question container - will be populated by JavaScript -->
+                    <div id="question-area"></div>
+                    
+                    <div class="navigation">
+                        <button id="prev-btn" class="nav-button" onclick="prevQuestion()">← Previous</button>
+                        <button id="next-btn" class="nav-button" onclick="nextQuestion()">Next →</button>
+                    </div>
+                    
+                    <div class="submit-container">
+                        <button id="submit-btn" onclick="showSubmitModal()">Submit Test ✅</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Submission Modal -->
+        <div class="modal" id="submit-modal">
+            <div class="modal-content">
+                <h2>Submit Test? 📝</h2>
+                <p>Are you sure you want to submit your test? Please review the summary below:</p>
+                
+                <div class="modal-stats">
+                    <div class="stat-box stat-answered" id="modal-answered">0</div>
+                    <div class="stat-box stat-unanswered" id="modal-unanswered">0</div>
+                    <div class="stat-box stat-marked" id="modal-marked">0</div>
+                    <div class="stat-box stat-not-visited" id="modal-not-visited">0</div>
+                </div>
+                
+                <p style="text-align: left; font-size: 14px; color: #666; margin-top: 10px;">
+                    • Answered: Questions you have answered<br>
+                    • Not Answered: Questions you visited but didn't answer<br>
+                    • Marked: Questions marked for review<br>
+                    • Not Visited: Questions you haven't seen yet
+                </p>
+                
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-cancel" onclick="hideSubmitModal()">Cancel</button>
+                    <button class="modal-btn modal-submit" onclick="submitTest()">Submit Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Analysis Page -->
+    <div id="analysis-page">
+        <div class="analysis-container">
+            <!-- Analysis content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Test Configuration
+        const TOTAL_QUESTIONS = 75; // 75 questions
+        const TEST_DURATION = 3 * 60 * 60; // 3 hours in seconds (180 minutes)
+        
+        // Integer type question ranges
+        const INTEGER_QUESTIONS = [
+            [21, 25],  // Questions 21-25
+            [45, 50],  // Questions 45-50  
+            [71, 75]   // Questions 71-75
+        ];
+        
+        // YOUR ANSWER KEY - 75 answers
+        const ANSWER_KEY = [
+            // Q1-20
+            'B', 'A', 'B', 'C', 'B', 'B', 'A', 'D', 'C', 'D',
+            'B', 'C', 'B', 'D', 'B', 'D', 'D', 'B', 'A', 'C',
+            // Q21-25 (Integer)
+            41, 1, 3, 2, 2,
+            // Q26-45
+            'A', 'C', 'A', 'C', 'D', 'C', 'D', 'D', 'A', 'C',
+            'D', 'C', 'D', 'B', 'D', 'B', 'D', 'D', 'B', 'C',
+            // Q46-50 (Integer)
+            5, 8, 3, 6, 200,
+            // Q51-70
+            'B', 'C', 'A', 'A', 'A', 'C', 'D', 'C', 'D', 'B',
+            'D', 'A', 'B', 'D', 'A', 'A', 'B', 'D', 'D', 'A',
+            // Q71-75 (Integer)
+            4, 720, 724, 7, 393
+        ];
+        
+        // Store user answers and status
+        let userAnswers = new Array(TOTAL_QUESTIONS).fill(null);
+        let markedQuestions = new Array(TOTAL_QUESTIONS).fill(false);
+        let visitedQuestions = new Array(TOTAL_QUESTIONS).fill(false);
+        
+        let currentQuestion = 0;
+        let timeLeft = TEST_DURATION;
+        let timerInterval;
+        
+        // Question data - AUTO-GENERATED for 75 questions
+        const questions = [];
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+            questions.push({
+                image: `${i}.png`,
+                options: ["A", "B", "C", "D"]
+            });
+        }
+        
+        // Create floating hearts for welcome page
+        function createFloatingHearts() {
+            const container = document.getElementById('floating-hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(heart);
+            }
+        }
+        
+        // Check if question is integer type
+        function isIntegerQuestion(questionNumber) {
+            for (const [start, end] of INTEGER_QUESTIONS) {
+                if (questionNumber >= start && questionNumber <= end) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        // Start the test
+        function startTest() {
+            console.log("Starting test...");
+            document.getElementById('welcome-page').style.display = 'none';
+            document.getElementById('test-page').style.display = 'block';
+            document.getElementById('analysis-page').style.display = 'none';
+            initTest();
+        }
+        
+        // Initialize the test
+        function initTest() {
+            console.log("Initializing test...");
+            // Update total questions display
+            document.getElementById('total-q').textContent = TOTAL_QUESTIONS;
+            
+            // Generate question palette
+            generateQuestionPalette();
+            
+            // Start timer
+            startTimer();
+            
+            // Display first question
+            displayQuestion(currentQuestion);
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Add keyboard shortcuts
+            setupKeyboardShortcuts();
+        }
+        
+        // Generate question palette grid
+        function generateQuestionPalette() {
+            const questionGrid = document.getElementById('question-grid');
+            questionGrid.innerHTML = '';
+            
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                const questionBox = document.createElement('div');
+                questionBox.className = 'question-box not-visited';
+                questionBox.textContent = i + 1;
+                questionBox.id = `q-box-${i}`;
+                
+                // Add integer type indicator
+                if (isIntegerQuestion(i + 1)) {
+                    questionBox.classList.add('integer-type');
+                }
+                
+                // Add click event
+                questionBox.onclick = () => navigateToQuestion(i);
+                
+                questionGrid.appendChild(questionBox);
+            }
+        }
+        
+        // Update question box color based on status
+        function updateQuestionBoxStatus(index) {
+            const questionBox = document.getElementById(`q-box-${index}`);
+            if (!questionBox) return;
+            
+            // Remove all status classes
+            questionBox.className = 'question-box';
+            
+            // Add integer type indicator
+            if (isIntegerQuestion(index + 1)) {
+                questionBox.classList.add('integer-type');
+            }
+            
+            // Remove current class from all boxes first
+            document.querySelectorAll('.question-box').forEach(box => {
+                box.classList.remove('current');
+            });
+            
+            // Add current class if this is the active question
+            if (index === currentQuestion) {
+                questionBox.classList.add('current');
+            }
+            
+            // Set color based on status
+            if (markedQuestions[index] && userAnswers[index] !== null) {
+                questionBox.classList.add('marked');
+            } else if (markedQuestions[index]) {
+                questionBox.classList.add('marked');
+            } else if (userAnswers[index] !== null) {
+                questionBox.classList.add('answered');
+            } else if (visitedQuestions[index]) {
+                questionBox.classList.add('unanswered');
+            } else {
+                questionBox.classList.add('not-visited');
+            }
+        }
+        
+        // Navigate to specific question
+        function navigateToQuestion(index) {
+            currentQuestion = index;
+            displayQuestion(currentQuestion);
+        }
+        
+        // Start the countdown timer
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                // Show warning when 30 minutes remaining
+                if (timeLeft === 30 * 60) {
+                    document.getElementById('time-warning').style.display = 'block';
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Display a question
+        function displayQuestion(index) {
+            // Mark question as visited
+            visitedQuestions[index] = true;
+            
+            const questionArea = document.getElementById('question-area');
+            const question = questions[index];
+            const questionNumber = index + 1;
+            const isIntegerType = isIntegerQuestion(questionNumber);
+            
+            document.getElementById('current-q').textContent = questionNumber;
+            
+            let questionHTML = `
+                <div class="question-container">
+                    <div class="question-number">
+                        <span>Question ${questionNumber}</span>
+                        <div class="question-type">
+                            ${isIntegerType ? 'Integer Type (0-9)' : 'MCQ Type'}
+                            ${markedQuestions[index] ? ' • Marked' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="question-image-container">
+                        <img src="${question.image}" alt="Question ${questionNumber}" class="question-image" 
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/800x300/667eea/ffffff?text=Question+${questionNumber}+Image'">
+                    </div>`;
+            
+            if (isIntegerType) {
+                // Integer type question
+                questionHTML += `
+                    <div class="integer-container">
+                        <input type="number" min="0" max="999" class="integer-box" 
+                               id="integer-input-${index}" 
+                               value="${userAnswers[index] !== null ? userAnswers[index] : ''}"
+                               onchange="handleIntegerInput(${index}, this.value)"
+                               placeholder="Enter integer">
+                        <div class="integer-note">
+                            Enter a numerical value between 0-999
+                        </div>
+                    </div>`;
+            } else {
+                // MCQ type question
+                questionHTML += `
+                    <div class="options-container">
+                        ${question.options.map((option, optIndex) => `
+                            <div class="option-row ${userAnswers[index] === optIndex ? 'selected' : ''}" 
+                                 onclick="selectOption(${index}, ${optIndex})">
+                                <div class="option-label">${String.fromCharCode(65 + optIndex)}</div>
+                                <div class="option-text">Option ${String.fromCharCode(65 + optIndex)}</div>
+                            </div>
+                        `).join('')}
+                    </div>`;
+            }
+            
+            questionHTML += `</div>`;
+            questionArea.innerHTML = questionHTML;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === TOTAL_QUESTIONS - 1;
+            
+            // Update question box status
+            updateQuestionBoxStatus(index);
+            updateProgressBar();
+        }
+        
+        // Handle integer input
+        function handleIntegerInput(questionIndex, value) {
+            // Validate integer input
+            const numValue = parseInt(value);
+            if (!isNaN(numValue) && numValue >= 0 && numValue <= 999) {
+                userAnswers[questionIndex] = numValue;
+            } else {
+                userAnswers[questionIndex] = null;
+            }
+            updateQuestionBoxStatus(questionIndex);
+        }
+        
+        // Select an option for MCQ
+        function selectOption(questionIndex, optionIndex) {
+            userAnswers[questionIndex] = optionIndex;
+            
+            // Update display
+            const optionRows = document.querySelectorAll('.option-row');
+            optionRows.forEach(row => row.classList.remove('selected'));
+            
+            // Find and select the clicked option
+            const selectedRow = document.querySelectorAll('.option-row')[optionIndex];
+            if (selectedRow) {
+                selectedRow.classList.add('selected');
+            }
+            
+            // Update question status
+            updateQuestionBoxStatus(questionIndex);
+        }
+        
+        // Mark current question for review
+        function markQuestion() {
+            markedQuestions[currentQuestion] = !markedQuestions[currentQuestion];
+            updateQuestionBoxStatus(currentQuestion);
+            
+            // Auto move to next question
+            if (currentQuestion < TOTAL_QUESTIONS - 1) {
+                nextQuestion();
+            }
+        }
+        
+        // Clear response for current question
+        function clearResponse() {
+            userAnswers[currentQuestion] = null;
+            markedQuestions[currentQuestion] = false;
+            
+            // Clear MCQ selection
+            const optionRows = document.querySelectorAll('.option-row');
+            optionRows.forEach(row => row.classList.remove('selected'));
+            
+            // Clear integer input if exists
+            const integerInput = document.getElementById(`integer-input-${currentQuestion}`);
+            if (integerInput) {
+                integerInput.value = '';
+            }
+            
+            // Update question status
+            updateQuestionBoxStatus(currentQuestion);
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < TOTAL_QUESTIONS - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            }
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / TOTAL_QUESTIONS) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+        
+        // Show submit confirmation modal
+        function showSubmitModal() {
+            // Calculate statistics
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const marked = markedQuestions.filter(marked => marked).length;
+            const visited = visitedQuestions.filter(visited => visited).length;
+            
+            // Update modal stats
+            document.getElementById('modal-answered').textContent = answered;
+            document.getElementById('modal-unanswered').textContent = visited - answered;
+            document.getElementById('modal-marked').textContent = marked;
+            document.getElementById('modal-not-visited').textContent = TOTAL_QUESTIONS - visited;
+            
+            // Show modal
+            document.getElementById('submit-modal').style.display = 'flex';
+        }
+        
+        // Hide submit modal
+        function hideSubmitModal() {
+            document.getElementById('submit-modal').style.display = 'none';
+        }
+        
+        // Submit the test
+        function submitTest() {
+            clearInterval(timerInterval);
+            hideSubmitModal();
+            
+            // Calculate score using real answer key
+            const score = calculateScore();
+            
+            // Show results
+            const questionArea = document.getElementById('question-area');
+            questionArea.innerHTML = `
+                <div class="question-container" style="text-align: center;">
+                    <h2 style="color: #764ba2; margin-bottom: 20px;">Test Submitted Successfully! 🎉</h2>
+                    
+                    <div style="font-size: 20px; margin-bottom: 30px; padding: 20px; border-radius: 10px; background: linear-gradient(45deg, #e3f2fd, #f3e5f5);">
+                        <p style="font-size: 32px; margin-bottom: 10px;">
+                            <span style="color: #ff4081;">Himani</span>, your score:
+                        </p>
+                        <p style="font-size: 64px; font-weight: bold; color: #4caf50; margin: 20px 0;">
+                            ${score.totalMarks}/${score.maxMarks}
+                        </p>
+                        <p style="font-size: 28px; color: #667eea;">
+                            (+${score.correct}×4 | -${score.incorrect}×1)
+                        </p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 30px 0;">
+                        <div style="background: linear-gradient(45deg, #4caf50, #2e7d32); color: white; padding: 15px; border-radius: 8px;">
+                            <h3>✅ Correct</h3>
+                            <p style="font-size: 28px; font-weight: bold;">${score.correct}</p>
+                            <p style="font-size: 14px;">+${score.correct * 4} marks</p>
+                        </div>
+                        <div style="background: linear-gradient(45deg, #f44336, #c62828); color: white; padding: 15px; border-radius: 8px;">
+                            <h3>❌ Incorrect</h3>
+                            <p style="font-size: 28px; font-weight: bold;">${score.incorrect}</p>
+                            <p style="font-size: 14px;">-${score.incorrect} marks</p>
+                        </div>
+                        <div style="background: linear-gradient(45deg, #757575, #424242); color: white; padding: 15px; border-radius: 8px;">
+                            <h3>❓ Unattempted</h3>
+                            <p style="font-size: 28px; font-weight: bold;">${score.unattempted}</p>
+                            <p style="font-size: 14px;">0 marks</p>
+                        </div>
+                        <div style="background: linear-gradient(45deg, #2196f3, #1565c0); color: white; padding: 15px; border-radius: 8px;">
+                            <h3>📍 Marked</h3>
+                            <p style="font-size: 28px; font-weight: bold;">${score.marked}</p>
+                            <p style="font-size: 14px;">${markedQuestions.filter(m => m).length} questions</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button onclick="showDetailedAnalysis()" style="padding: 15px 30px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600; margin-right: 15px;">
+                            View Detailed Analysis 📊
+                        </button>
+                        <button onclick="window.location.reload()" style="padding: 15px 30px; background: linear-gradient(45deg, #ff4081, #ff9100); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: 600;">
+                            Take Test Again 🔄
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Hide navigation and submit button
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.submit-container').style.display = 'none';
+            document.querySelector('.progress-bar').style.display = 'none';
+            document.querySelector('.question-counter').style.display = 'none';
+            document.getElementById('time-warning').style.display = 'none';
+            
+            // Update palette to show final status
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                updateQuestionBoxStatus(i);
+            }
+        }
+        
+        // Calculate score based on answer key
+        function calculateScore() {
+            let correct = 0;
+            let incorrect = 0;
+            let unattempted = 0;
+            let marked = 0;
+            
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                if (userAnswers[i] === null) {
+                    unattempted++;
+                } else if (isIntegerQuestion(i + 1)) {
+                    // Integer questions: direct comparison
+                    if (parseInt(userAnswers[i]) === ANSWER_KEY[i]) {
+                        correct++;
+                    } else {
+                        incorrect++;
+                    }
+                } else {
+                    // MCQ questions: compare with letters A,B,C,D
+                    const userAnswer = String.fromCharCode(65 + userAnswers[i]);
+                    if (userAnswer === ANSWER_KEY[i]) {
+                        correct++;
+                    } else {
+                        incorrect++;
+                    }
+                }
+                
+                if (markedQuestions[i]) {
+                    marked++;
+                }
+            }
+            
+            // JEE Mains scoring: +4 for correct, -1 for incorrect
+            const totalMarks = (correct * 4) - (incorrect * 1);
+            
+            return {
+                correct: correct,
+                incorrect: incorrect,
+                unattempted: unattempted,
+                marked: marked,
+                totalMarks: totalMarks,
+                maxMarks: TOTAL_QUESTIONS * 4
+            };
+        }
+        
+        // Show detailed analysis
+        function showDetailedAnalysis() {
+            document.getElementById('test-page').style.display = 'none';
+            document.getElementById('analysis-page').style.display = 'block';
+            
+            const analysisContainer = document.querySelector('.analysis-container');
+            const score = calculateScore();
+            
+            analysisContainer.innerHTML = `
+                <div class="score-header">
+                    <h1 style="color: #764ba2;">Detailed Analysis 📊</h1>
+                    <div class="score-display">
+                        ${score.totalMarks}/${score.maxMarks} Marks
+                    </div>
+                    <div style="color: #666; font-size: 18px; margin-top: 10px;">
+                        (+${score.correct}×4 = +${score.correct * 4} | -${score.incorrect}×1 = -${score.incorrect})
+                    </div>
+                </div>
+                
+                <div class="score-details">
+                    <div class="score-item correct">
+                        <div class="score-value">${score.correct}</div>
+                        <div class="score-label">Correct Answers</div>
+                        <div style="font-size: 12px; margin-top: 5px;">+${score.correct * 4} marks</div>
+                    </div>
+                    <div class="score-item incorrect">
+                        <div class="score-value">${score.incorrect}</div>
+                        <div class="score-label">Incorrect Answers</div>
+                        <div style="font-size: 12px; margin-top: 5px;">-${score.incorrect} marks</div>
+                    </div>
+                    <div class="score-item unattempted">
+                        <div class="score-value">${score.unattempted}</div>
+                        <div class="score-label">Unattempted</div>
+                        <div style="font-size: 12px; margin-top: 5px;">0 marks</div>
+                    </div>
+                </div>
+                
+                <div class="questions-analysis">
+                    <h3 style="color: #333; margin: 30px 0 20px 0;">Question-wise Analysis:</h3>
+                    <div class="analysis-grid">
+                        ${Array.from({length: TOTAL_QUESTIONS}, (_, i) => {
+                            const questionNum = i + 1;
+                            let status = '';
+                            let borderClass = '';
+                            
+                            if (userAnswers[i] === null) {
+                                status = 'unattempted';
+                            } else if (isIntegerQuestion(questionNum)) {
+                                const userAns = parseInt(userAnswers[i]);
+                                status = userAns === ANSWER_KEY[i] ? 'correct' : 'incorrect';
+                            } else {
+                                const userAns = String.fromCharCode(65 + userAnswers[i]);
+                                status = userAns === ANSWER_KEY[i] ? 'correct' : 'incorrect';
+                            }
+                            
+                            if (markedQuestions[i]) {
+                                borderClass = 'marked';
+                            }
+                            
+                            return `<div class="analysis-question-box ${status} ${borderClass}" onclick="showQuestionDetail(${i})">${questionNum}</div>`;
+                        }).join('')}
+                    </div>
+                    
+                    <div class="marking-system">
+                        <div class="marking-item">
+                            <div style="width: 20px; height: 20px; background-color: #4caf50; border-radius: 3px; margin-right: 5px;"></div>
+                            <span>Correct (+4)</span>
+                        </div>
+                        <div class="marking-item">
+                            <div style="width: 20px; height: 20px; background-color: #f44336; border-radius: 3px; margin-right: 5px;"></div>
+                            <span>Incorrect (-1)</span>
+                        </div>
+                        <div class="marking-item">
+                            <div style="width: 20px; height: 20px; background-color: #757575; border-radius: 3px; margin-right: 5px;"></div>
+                            <span>Unattempted (0)</span>
+                        </div>
+                        <div class="marking-item">
+                            <div style="width: 20px; height: 20px; background-color: white; border: 3px solid #2196f3; border-radius: 3px; margin-right: 5px;"></div>
+                            <span>Marked for Review</span>
+                        </div>
+                    </div>
+                    
+                    <div id="question-detail-container" class="question-detail">
+                        <p style="color: #666; text-align: center;">Click on any question number to see details</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Show question details in analysis
+        function showQuestionDetail(questionIndex) {
+            const container = document.getElementById('question-detail-container');
+            const questionNum = questionIndex + 1;
+            const userAnswer = userAnswers[questionIndex];
+            const correctAnswer = ANSWER_KEY[questionIndex];
+            const isInteger = isIntegerQuestion(questionNum);
+            
+            let userAnswerText = 'Not Attempted';
+            if (userAnswer !== null) {
+                if (isInteger) {
+                    userAnswerText = userAnswer;
+                } else {
+                    userAnswerText = String.fromCharCode(65 + userAnswer);
+                }
+            }
+            
+            let correctAnswerText = isInteger ? correctAnswer : correctAnswer;
+            let isCorrect = false;
+            
+            if (userAnswer !== null) {
+                if (isInteger) {
+                    isCorrect = parseInt(userAnswer) === correctAnswer;
+                } else {
+                    isCorrect = String.fromCharCode(65 + userAnswer) === correctAnswer;
+                }
+            }
+            
+            // Get the question image URL
+            const questionImage = `${questionNum}.png`;
+            const placeholderImage = `https://via.placeholder.com/800x300/667eea/ffffff?text=Question+${questionNum}+Image`;
+            
+            container.innerHTML = `
+                <div class="question-detail-header">
+                    <h3 style="color: #333;">Question ${questionNum}</h3>
+                    <div style="display: flex; gap: 15px;">
+                        <span style="color: ${isCorrect ? '#4caf50' : (userAnswer === null ? '#757575' : '#f44336')}; font-weight: bold;">
+                            ${isCorrect ? '✅ Correct (+4)' : (userAnswer === null ? '❓ Unattempted (0)' : '❌ Incorrect (-1)')}
+                        </span>
+                        ${markedQuestions[questionIndex] ? '<span style="color: #2196f3; font-weight: bold;">📍 Marked</span>' : ''}
+                    </div>
+                </div>
+                
+                <!-- Question Image with Click to Enlarge -->
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #764ba2; margin-bottom: 10px;">Question Preview:</h4>
+                    <div style="text-align: center; cursor: pointer;" onclick="showLargeImage(${questionNum})">
+                        <img src="${questionImage}" 
+                             alt="Question ${questionNum}" 
+                             style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); border: 2px solid #e0e0e0;"
+                             onerror="this.onerror=null; this.src='${placeholderImage}'">
+                        <p style="color: #666; font-size: 12px; margin-top: 5px;">Click to enlarge image</p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <p><strong>Your Answer:</strong> <span class="user-answer">${userAnswerText}</span></p>
+                    <p><strong>Correct Answer:</strong> <span class="correct-answer">${correctAnswerText}</span></p>
+                    <p><strong>Question Type:</strong> ${isInteger ? 'Integer Type' : 'MCQ Type'}</p>
+                </div>
+                
+                ${isInteger ? '' : `
+                    <div>
+                        <p><strong>Options:</strong></p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                            ${['A', 'B', 'C', 'D'].map((opt, idx) => {
+                                const isUserAnswer = !isInteger && userAnswer === idx;
+                                const isCorrectAnswer = !isInteger && correctAnswer === opt;
+                                let style = 'padding: 10px; border-radius: 5px;';
+                                
+                                if (isUserAnswer && isCorrectAnswer) {
+                                    style += 'background-color: #4caf50; color: white; border: 2px solid #2e7d32;';
+                                } else if (isUserAnswer) {
+                                    style += 'background-color: #f44336; color: white; border: 2px solid #c62828;';
+                                } else if (isCorrectAnswer) {
+                                    style += 'background-color: #e8f5e9; color: #2e7d32; border: 2px solid #4caf50;';
+                                } else {
+                                    style += 'background-color: #f5f5f5; color: #666; border: 1px solid #ddd;';
+                                }
+                                
+                                return `<div style="${style}">${opt}</div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `}
+            `;
+        }
+        
+        // Function to show large image in modal
+        function showLargeImage(questionNum) {
+            const questionImage = `${questionNum}.png`;
+            const placeholderImage = `https://via.placeholder.com/1000x500/667eea/ffffff?text=Question+${questionNum}+Image`;
+            
+            // Create modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                cursor: pointer;
+            `;
+            
+            // Create image container
+            const imgContainer = document.createElement('div');
+            imgContainer.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                position: relative;
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            `;
+            
+            // Create close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '×';
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: #ff4081;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                font-size: 20px;
+                cursor: pointer;
+                z-index: 2001;
+            `;
+            closeBtn.onclick = (e) => {
+                e.stopPropagation();
+                document.body.removeChild(modal);
+            };
+            
+            // Create image
+            const img = document.createElement('img');
+            img.src = questionImage;
+            img.alt = `Question ${questionNum}`;
+            img.style.cssText = `
+                max-width: 100%;
+                max-height: 80vh;
+                display: block;
+                margin: 0 auto;
+                border-radius: 5px;
+            `;
+            img.onerror = function() {
+                this.src = placeholderImage;
+            };
+            
+            // Create caption
+            const caption = document.createElement('div');
+            caption.innerHTML = `<p style="text-align: center; margin-top: 10px; color: #666; font-size: 14px;">Question ${questionNum} - Click anywhere to close</p>`;
+            
+            // Assemble modal
+            imgContainer.appendChild(closeBtn);
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(caption);
+            modal.appendChild(imgContainer);
+            
+            // Close modal when clicking outside
+            modal.onclick = () => {
+                document.body.removeChild(modal);
+            };
+            
+            // Add to page
+            document.body.appendChild(modal);
+        }
+        
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                const isInteger = isIntegerQuestion(currentQuestion + 1);
+                
+                if (!isInteger) {
+                    switch(e.key) {
+                        case 'ArrowRight':
+                            if (currentQuestion < TOTAL_QUESTIONS - 1) nextQuestion();
+                            break;
+                        case 'ArrowLeft':
+                            if (currentQuestion > 0) prevQuestion();
+                            break;
+                        case 'm':
+                            markQuestion();
+                            break;
+                        case 'c':
+                            clearResponse();
+                            break;
+                        case '1':
+                            selectOption(currentQuestion, 0);
+                            break;
+                        case '2':
+                            selectOption(currentQuestion, 1);
+                            break;
+                        case '3':
+                            selectOption(currentQuestion, 2);
+                            break;
+                        case '4':
+                            selectOption(currentQuestion, 3);
+                            break;
+                        case 'Enter':
+                            if (currentQuestion < TOTAL_QUESTIONS - 1) nextQuestion();
+                            break;
+                    }
+                }
+            });
+        }
+        
+        // Initialize when page loads
+        window.onload = function() {
+            createFloatingHearts();
+            console.log("Page loaded successfully");
+            
+            // Add event listener to start button
+            document.getElementById('start-test-btn').addEventListener('click', startTest);
+        };
+    </script>
+</body>
+</html>
