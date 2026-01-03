@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* All your CSS styles remain the same */
+        /* All CSS remains exactly the same as in previous complete version */
         * {
             margin: 0;
             padding: 0;
@@ -37,9 +37,11 @@
             align-items: center;
             gap: 10px;
         }
+        
         .pdf-button:hover {
             background: #c82333;
         }
+        
         .results-container {
             background: #f8f9fa;
             padding: 20px;
@@ -47,7 +49,7 @@
             margin: 20px 0;
         }
         
-        /* Welcome Page Styles */
+        /* ========== NEW COOLER WELCOME PAGE ========== */
         #welcome-page {
             display: flex;
             flex-direction: column;
@@ -56,122 +58,251 @@
             min-height: 100vh;
             padding: 20px;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .welcome-container {
             max-width: 800px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 50px 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 25px 75px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 2;
         }
         
-        .love-heart {
-            font-size: 80px;
-            color: #ff4081;
-            margin-bottom: 20px;
-            animation: heartbeat 1.5s ease infinite;
+        /* Floating particles effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatParticle 20s linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Shining star effect */
+        .shining-star {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: pulseStar 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulseStar {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
         }
         
         .welcome-title {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 20px;
-            background: linear-gradient(45deg, #ff4081, #ff9100);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 10px rgba(255,64,129,0.3);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            }
+            to {
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+            }
         }
         
         .name-highlight {
-            color: #ff4081;
-            font-size: 56px;
+            display: block;
+            font-size: 68px;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(255,64,129,0.7);
-            animation: glow 2s ease-in-out infinite alternate;
+            background: linear-gradient(45deg, #ff4081, #ff9100, #ffd166, #06d6a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 20px rgba(255,64,129,0.3);
+            margin: 15px 0;
+            animation: namePulse 3s infinite;
         }
         
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #ff4081; }
-            to { text-shadow: 0 0 20px #ff4081, 0 0 30px #ff4081; }
+        @keyframes namePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
         
-        .message {
-            font-size: 20px;
-            margin: 20px 0;
+        .welcome-message {
+            font-size: 22px;
+            margin: 30px 0;
             line-height: 1.8;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
         }
         
-        .creator {
-            font-size: 18px;
-            color: #ff9100;
-            margin-top: 30px;
-            font-style: italic;
+        .quote-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 5px solid #ff4081;
+            text-align: left;
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .quote-box i {
+            color: #ff4081;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .creator-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         
         .start-btn {
             margin-top: 40px;
-            padding: 18px 50px;
-            font-size: 22px;
-            background: linear-gradient(45deg, #ff4081, #ff9100);
+            padding: 20px 60px;
+            font-size: 24px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255,64,129,0.4);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .start-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .start-btn:hover:before {
+            left: 100%;
         }
         
         .start-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255,64,129,0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.6);
         }
         
-        /* Floating Hearts Animation */
-        .floating-hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+        .test-details {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
         
-        .heart {
-            position: absolute;
-            color: #ff4081;
-            font-size: 24px;
-            opacity: 0.6;
-            animation: float 15s linear infinite;
+        .test-detail-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            color: white;
+            font-weight: bold;
+            animation: fadeInUp 1s ease-out;
         }
         
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
+        @keyframes fadeInUp {
+            from {
                 opacity: 0;
+                transform: translateY(30px);
             }
-            10% {
-                opacity: 0.8;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
         
@@ -872,31 +1003,62 @@
     </style>
 </head>
 <body>
-    <!-- Welcome Page -->
+    <!-- NEW COOLER WELCOME PAGE -->
     <div id="welcome-page">
-        <div class="floating-hearts" id="floating-hearts"></div>
+        <div class="particles" id="particles"></div>
+        <div class="shining-star" style="top: 20%; left: 15%;"></div>
+        <div class="shining-star" style="top: 60%; right: 20%; animation-delay: 1s;"></div>
+        <div class="shining-star" style="top: 80%; left: 25%; animation-delay: 2s;"></div>
+        
         <div class="welcome-container">
-            <div class="love-heart">❤️</div>
-            <h1 class="welcome-title">Welcome <span class="name-highlight">Himani Saini</span> 💖</h1>
+            <h1 class="welcome-title">
+                🚀 JEE Mains Mock Test <br>
+                <span class="name-highlight">Himani Saini</span>
+            </h1>
             
-            <div class="message">
-                <p>Welcome to your personalized JEE Mains Mock Test Platform! ✨</p>
-                <p style="margin: 15px 0; font-size: 22px; color: #ffd700;">"Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle." 🌟</p>
-                <p>This platform is specially crafted with love to help you ace your preparation. Every question, every timer tick, is designed with your success in mind.</p>
+            <div class="welcome-message">
+                <p>Welcome to your ultimate JEE preparation platform! ✨</p>
+                <p>Designed to simulate the real JEE Mains experience with cutting-edge features</p>
             </div>
             
-            <div class="creator">
-                <p>Made with 💖 by <strong style="color: #00bcd4;">ANUSH</strong></p>
-                <p style="font-size: 16px; margin-top: 10px;">Just for you, my star ✨</p>
+            <div class="quote-box">
+                <i class="fas fa-quote-left"></i>
+                <p style="font-size: 20px; color: #fff; font-style: italic;">
+                    "Success is not the key to happiness. Happiness is the key to success. 
+                    If you love what you are doing, you will be successful."
+                </p>
+                <p style="text-align: right; margin-top: 10px; color: #ffd166;">- Albert Schweitzer</p>
+            </div>
+            
+            <div class="creator-badge">
+                <p style="font-size: 18px; color: white; margin: 0;">
+                    Made with 💖 by <strong style="color: #ffd166;">ANUSH</strong>
+                </p>
+                <p style="font-size: 16px; margin-top: 5px; color: rgba(255,255,255,0.9);">
+                    For my shining star ✨
+                </p>
+            </div>
+            
+            <div class="test-details">
+                <div class="test-detail-item">
+                    <i class="fas fa-list-ol"></i> 75 Questions
+                </div>
+                <div class="test-detail-item">
+                    <i class="fas fa-clock"></i> 3 Hours
+                </div>
+                <div class="test-detail-item">
+                    <i class="fas fa-brain"></i> MCQ + Integer Type
+                </div>
+                <div class="test-detail-item">
+                    <i class="fas fa-chart-line"></i> Detailed Analysis
+                </div>
             </div>
             
             <button class="start-btn" id="start-test-btn">
-                Start Your Test 🚀
+                <i class="fas fa-rocket" style="margin-right: 10px;"></i>
+                Begin Your Journey
+                <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
             </button>
-            
-            <div style="margin-top: 30px; font-size: 14px; color: rgba(255,255,255,0.7);">
-                <p>⏰ 75 Questions • 3 Hours • MCQ + Integer Type</p>
-            </div>
         </div>
     </div>
     
@@ -1021,30 +1183,34 @@
         const TOTAL_QUESTIONS = 75; // 75 questions
         const TEST_DURATION = 3 * 60 * 60; // 3 hours in seconds (180 minutes)
         
-        // Integer type question ranges
+        // CORRECTED Integer type question ranges
+        // Based on answer key: 
+        // Q21-25 have integer answers (8.0, 6, 2.0, 48, 18)
+        // Q46-50 have integer answers (140, 2.0, 8, 2.0, 5)
+        // Q71-75 have integer answers (4, 6, 2, 6, 2)
         const INTEGER_QUESTIONS = [
-            [21, 25],  // Questions 21-25
-            [45, 50],  // Questions 45-50  
-            [71, 75]   // Questions 71-75
+            [21, 25],  // Questions 21-25 (integer)
+            [46, 50],  // Questions 46-50 (integer) - CORRECTED: was [45,50]  
+            [71, 75]   // Questions 71-75 (integer)
         ];
         
-        // YOUR ANSWER KEY - 75 answers
+        // UPDATED ANSWER KEY - 75 answers (provided by you)
         const ANSWER_KEY = [
-            // Q1-20
-            'B', 'A', 'B', 'C', 'B', 'B', 'A', 'D', 'C', 'D',
-            'B', 'C', 'B', 'D', 'B', 'D', 'D', 'B', 'A', 'C',
+            // Q1-20 (MCQ)
+            'B', 'B', 'B', 'B', 'C', 'A', 'D', 'C', 'C', 'C',
+            'D', 'B', 'D', 'B', 'C', 'C', 'D', 'D', 'B', 'C',
             // Q21-25 (Integer)
-            41, 1, 3, 2, 2,
-            // Q26-45
-            'A', 'C', 'A', 'C', 'D', 'C', 'D', 'D', 'A', 'C',
-            'D', 'C', 'D', 'B', 'D', 'B', 'D', 'D', 'B', 'C',
-            // Q46-50 (Integer)
-            5, 8, 3, 6, 200,
-            // Q51-70
-            'B', 'C', 'A', 'A', 'A', 'C', 'D', 'C', 'D', 'B',
-            'D', 'A', 'B', 'D', 'A', 'A', 'B', 'D', 'D', 'A',
+            8.0, 6, 2.0, 48, 18,
+            // Q26-45 (MCQ)
+            'A', 'A', 'D', 'C', 'C', 'B', 'A', 'B', 'D', 'B',
+            'B', 'C', 'C', 'A', 'A', 'A', 'A', 'B', 'A', 'D',
+            // Q46-50 (Integer) - Q46 is integer (140), not MCQ 'B'
+            140, 2.0, 8, 2.0, 5,
+            // Q51-70 (MCQ)
+            'B', 'D', 'D', 'A', 'B', 'B', 'C', 'C', 'A', 'D',
+            'C', 'A', 'B', 'D', 'C', 'D', 'C', 'B', '8', 'B',
             // Q71-75 (Integer)
-            4, 720, 724, 7, 393
+            4, 6, 2, 6, 2
         ];
         
         // Store user answers and status
@@ -1056,18 +1222,31 @@
         let timeLeft = TEST_DURATION;
         let timerInterval;
         
-        // Create floating hearts for welcome page
-        function createFloatingHearts() {
-            const container = document.getElementById('floating-hearts');
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDelay = Math.random() * 15 + 's';
-                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                heart.style.opacity = Math.random() * 0.5 + 0.3;
-                container.appendChild(heart);
+        // Create floating particles for welcome page
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+                
+                // Random colors for particles
+                const colors = [
+                    'rgba(255, 255, 255, 0.8)',
+                    'rgba(255, 107, 107, 0.6)',
+                    'rgba(78, 205, 196, 0.6)',
+                    'rgba(69, 183, 209, 0.6)',
+                    'rgba(150, 206, 180, 0.6)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
             }
         }
         
@@ -1274,7 +1453,7 @@
         // Handle integer input
         function handleIntegerInput(questionIndex, value) {
             // Validate integer input
-            const numValue = parseInt(value);
+            const numValue = parseFloat(value);
             if (!isNaN(numValue) && numValue >= 0 && numValue <= 999) {
                 userAnswers[questionIndex] = numValue;
             } else {
@@ -1463,7 +1642,7 @@
                     unattempted++;
                 } else if (isIntegerQuestion(i + 1)) {
                     // Integer questions: direct comparison
-                    if (parseInt(userAnswers[i]) === ANSWER_KEY[i]) {
+                    if (parseFloat(userAnswers[i]) === parseFloat(ANSWER_KEY[i])) {
                         correct++;
                     } else {
                         incorrect++;
@@ -1575,7 +1754,7 @@
                 let isCorrect = false;
                 if (userAnswer !== null) {
                     if (isIntegerType) {
-                        isCorrect = parseInt(userAnswer) === correctAnswer;
+                        isCorrect = parseFloat(userAnswer) === parseFloat(correctAnswer);
                     } else {
                         const userAnswerLetter = String.fromCharCode(65 + userAnswer);
                         isCorrect = userAnswerLetter === correctAnswer;
@@ -1741,8 +1920,8 @@
                             if (userAnswers[i] === null) {
                                 status = 'unattempted';
                             } else if (isIntegerQuestion(questionNum)) {
-                                const userAns = parseInt(userAnswers[i]);
-                                status = userAns === ANSWER_KEY[i] ? 'correct' : 'incorrect';
+                                const userAns = parseFloat(userAnswers[i]);
+                                status = userAns === parseFloat(ANSWER_KEY[i]) ? 'correct' : 'incorrect';
                             } else {
                                 const userAns = String.fromCharCode(65 + userAnswers[i]);
                                 status = userAns === ANSWER_KEY[i] ? 'correct' : 'incorrect';
@@ -1805,7 +1984,7 @@
             
             if (userAnswer !== null) {
                 if (isInteger) {
-                    isCorrect = parseInt(userAnswer) === correctAnswer;
+                    isCorrect = parseFloat(userAnswer) === parseFloat(correctAnswer);
                 } else {
                     isCorrect = String.fromCharCode(65 + userAnswer) === correctAnswer;
                 }
@@ -2001,7 +2180,7 @@
         
         // Initialize when page loads
         window.onload = function() {
-            createFloatingHearts();
+            createParticles();
             console.log("Page loaded successfully");
             
             // Add event listener to start button
