@@ -1216,25 +1216,24 @@
             [71, 75]   // Questions 71-75 (integer)
         ];
         
-        // UPDATED ANSWER KEY - Based on your new input
-        const ANSWER_KEY = [
-            // Q1-20 (MCQ)
-            'D', 'D', 'A', 'C', 'B', 'C', 'D', 'A', 'B', 'C',
-            'C', 'A', 'B', 'A', 'A', 'C', 'C', 'C', 'D', 'C',
-            // Q21-25 (Integer)
-            125, 6, 2, 3, 4,
-            // Q26-45 (MCQ)
-            'D', 'B', 'D', 'D', 'B', 'B', 'A', 'D', 'C', 8,
-            'D', 4.65, 'D', 2, 55, 1, 6, 10, 9, 240,
-            // Note: Some of these might be integer types - will need clarification
-            // Q46-50 (should be integer range)
-            'D', 'B', 'A', 'A', 'B',
-            // Q51-70 (MCQ)
-            'C', 'B', 'A', 10, 'C', 'D', 'B', 'D', 'C', 'D',
-            'A', 'B', 100, 7, 5, 1, 5, '?', '?', '?',
-            // Q71-75 (Integer) - Need last 5 values
-            4, 6, 2, 6, 2  // Keeping original as placeholder
-        ];
+        // UPDATED ANSWER KEY - 75 exact answers (provided by you)
+const ANSWER_KEY = [
+    // Q1-20 (MCQ)
+    'D', 'D', 'A', 'C', 'B', 'C', 'D', 'A', 'B', 'C',
+    'C', 'A', 'B', 'A', 'A', 'C', 'C', 'C', 'D', 'C',
+    // Q21-25 (Integer)
+    125, 6, 2, 3, 4,
+    // Q26-45 (MCQ) - Note: Some might be integers based on ranges
+    'D', 'B', 'D', 'D', 'B', 'B', 'A', 'D', 'A', 'C',
+    'D', 'A', 'D', 'D', 'B', 'C', 'D', 'D', 'A', 'B',
+    // Q46-50 (Integer)
+    1, 6, 10, 9, 240,
+    // Q51-70 (MCQ)
+    'D', 'B', 'A', 'A', 'B', 'B', 'C', 'C', 'A', 'D',
+    'C', 'D', 'A', 'D', 'C', 'D', 'B', 'A', 'B', 'D',
+    // Q71-75 (Integer)
+    100, 7, 5, 1, 5
+];
         
         // Store user answers and status
         let userAnswers = new Array(TOTAL_QUESTIONS).fill(null);
