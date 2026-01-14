@@ -49,7 +49,7 @@
             margin: 20px 0;
         }
         
-        /* ========== NEW COOLER WELCOME PAGE ========== */
+        /* ========== UPDATED CLASSY WELCOME PAGE ========== */
         #welcome-page {
             display: flex;
             flex-direction: column;
@@ -58,32 +58,30 @@
             min-height: 100vh;
             padding: 20px;
             text-align: center;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
             overflow: hidden;
         }
         
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
         .welcome-container {
-            max-width: 800px;
-            padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            box-shadow: 0 25px 75px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.3);
+            max-width: 900px;
+            padding: 60px 50px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.15);
             position: relative;
             z-index: 2;
+            animation: containerFloat 8s ease-in-out infinite;
         }
         
-        /* Floating particles effect */
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Animated particles effect */
         .particles {
             position: absolute;
             top: 0;
@@ -96,7 +94,7 @@
         
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.6);
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: floatParticle 20s linear infinite;
@@ -108,10 +106,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.7;
             }
             90% {
-                opacity: 1;
+                opacity: 0.7;
             }
             100% {
                 transform: translateY(-100px) rotate(360deg);
@@ -119,90 +117,81 @@
             }
         }
         
-        /* Shining star effect */
-        .shining-star {
+        /* Golden glow effect */
+        .glow-effect {
             position: absolute;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0) 70%);
             border-radius: 50%;
-            filter: blur(2px);
-            animation: pulseStar 3s ease-in-out infinite;
+            filter: blur(40px);
+            z-index: 1;
+            animation: pulseGlow 4s ease-in-out infinite alternate;
         }
         
-        @keyframes pulseStar {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(1.3); opacity: 0.5; }
         }
         
         .welcome-title {
             font-size: 52px;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #ffd700, #ffec8b, #ffd700);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes textGlow {
-            from {
-                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-            }
-            to {
-                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
-            }
+            text-shadow: 0 5px 25px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
         }
         
         .name-highlight {
             display: block;
-            font-size: 68px;
+            font-size: 72px;
             font-weight: bold;
-            background: linear-gradient(45deg, #ff4081, #ff9100, #ffd166, #06d6a0);
+            background: linear-gradient(45deg, #ffd700, #daa520, #ffec8b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 5px 20px rgba(255,64,129,0.3);
-            margin: 15px 0;
-            animation: namePulse 3s infinite;
+            text-shadow: 0 5px 30px rgba(255, 215, 0, 0.4);
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
         }
         
-        @keyframes namePulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+        .name-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
         }
         
         .welcome-message {
             font-size: 22px;
-            margin: 30px 0;
+            margin: 35px 0;
             line-height: 1.8;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
         .quote-box {
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
-            border-radius: 15px;
-            padding: 20px;
-            margin: 25px 0;
-            border-left: 5px solid #ff4081;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(218,165,32,0.05));
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid #ffd700;
             text-align: left;
-            animation: slideIn 1s ease-out;
+            animation: slideIn 1.5s ease-out;
+            backdrop-filter: blur(10px);
         }
         
         @keyframes slideIn {
@@ -217,82 +206,107 @@
         }
         
         .quote-box i {
-            color: #ff4081;
-            font-size: 24px;
-            margin-right: 10px;
+            color: #ffd700;
+            font-size: 26px;
+            margin-right: 15px;
+            float: left;
         }
         
         .creator-badge {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            padding: 15px 25px;
-            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(218,165,32,0.1));
+            padding: 18px 35px;
+            border-radius: 60px;
             display: inline-block;
-            margin: 20px 0;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        .start-btn {
-            margin-top: 40px;
-            padding: 20px 60px;
-            font-size: 24px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            margin: 25px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            animation: badgeFloat 6s ease-in-out infinite;
             position: relative;
             overflow: hidden;
         }
         
-        .start-btn:before {
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        .creator-badge::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
             transition: 0.5s;
         }
         
-        .start-btn:hover:before {
+        .creator-badge:hover::before {
+            left: 100%;
+        }
+        
+        .start-btn {
+            margin-top: 40px;
+            padding: 22px 70px;
+            font-size: 26px;
+            background: linear-gradient(135deg, #ffd700, #daa520);
+            color: #0c0c0c;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+        
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .start-btn:hover::before {
             left: 100%;
         }
         
         .start-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.6);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(255, 215, 0, 0.5);
         }
         
         .test-details {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
+            gap: 35px;
+            margin-top: 35px;
             flex-wrap: wrap;
         }
         
         .test-detail-item {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px 25px;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 18px 28px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            color: #ffd700;
             font-weight: bold;
             animation: fadeInUp 1s ease-out;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            min-width: 160px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-detail-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
         }
         
         @keyframes fadeInUp {
@@ -306,6 +320,13 @@
             }
         }
         
+        .test-detail-item i {
+            margin-right: 10px;
+            font-size: 20px;
+            color: #ffd700;
+        }
+        
+        /* Remaining CSS stays exactly the same... */
         /* Test Page Styles */
         #test-page {
             display: none;
@@ -1003,39 +1024,38 @@
     </style>
 </head>
 <body>
-    <!-- NEW COOLER WELCOME PAGE -->
+    <!-- UPDATED CLASSY WELCOME PAGE -->
     <div id="welcome-page">
         <div class="particles" id="particles"></div>
-        <div class="shining-star" style="top: 20%; left: 15%;"></div>
-        <div class="shining-star" style="top: 60%; right: 20%; animation-delay: 1s;"></div>
-        <div class="shining-star" style="top: 80%; left: 25%; animation-delay: 2s;"></div>
+        <div class="glow-effect" style="top: 10%; right: 10%;"></div>
+        <div class="glow-effect" style="bottom: 20%; left: 10%; animation-delay: 2s;"></div>
         
         <div class="welcome-container">
             <h1 class="welcome-title">
-                🚀 JEE Mains Mock Test <br>
+                <i class="fas fa-graduation-cap"></i> JEE Mains Elite Test
                 <span class="name-highlight">Himani Saini</span>
             </h1>
             
             <div class="welcome-message">
-                <p>Welcome to your ultimate JEE preparation platform! ✨</p>
-                <p>Designed to simulate the real JEE Mains experience with cutting-edge features</p>
+                <p>Welcome to your premium JEE preparation experience! ✨</p>
+                <p>Engineered for excellence with real-time performance analytics and precision evaluation.</p>
             </div>
             
             <div class="quote-box">
                 <i class="fas fa-quote-left"></i>
-                <p style="font-size: 20px; color: #fff; font-style: italic;">
-                    "Success is not the key to happiness. Happiness is the key to success. 
-                    If you love what you are doing, you will be successful."
+                <p style="font-size: 20px; color: #ffd700; font-style: italic; font-weight: 500;">
+                    "The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle."
                 </p>
-                <p style="text-align: right; margin-top: 10px; color: #ffd166;">- Albert Schweitzer</p>
+                <p style="text-align: right; margin-top: 10px; color: #daa520;">- Steve Jobs</p>
             </div>
             
             <div class="creator-badge">
-                <p style="font-size: 18px; color: white; margin: 0;">
-                    Made with 💖 by <strong style="color: #ffd166;">ANUSH</strong>
+                <p style="font-size: 18px; color: #ffd700; margin: 0;">
+                    <i class="fas fa-heart" style="color: #ff4081; margin-right: 8px;"></i>
+                    Crafted with precision by <strong style="color: white;">ANUSH</strong>
                 </p>
-                <p style="font-size: 16px; margin-top: 5px; color: rgba(255,255,255,0.9);">
-                    For my shining star ✨
+                <p style="font-size: 16px; margin-top: 5px; color: rgba(255, 255, 255, 0.8);">
+                    For the future engineer <i class="fas fa-star" style="color: #ffd700;"></i>
                 </p>
             </div>
             
@@ -1047,17 +1067,23 @@
                     <i class="fas fa-clock"></i> 3 Hours
                 </div>
                 <div class="test-detail-item">
-                    <i class="fas fa-brain"></i> MCQ + Integer Type
+                    <i class="fas fa-brain"></i> MCQ + Integer
                 </div>
                 <div class="test-detail-item">
-                    <i class="fas fa-chart-line"></i> Detailed Analysis
+                    <i class="fas fa-chart-bar"></i> Analytics
+                </div>
+                <div class="test-detail-item">
+                    <i class="fas fa-medal"></i> Score Report
+                </div>
+                <div class="test-detail-item">
+                    <i class="fas fa-file-pdf"></i> PDF Export
                 </div>
             </div>
             
             <button class="start-btn" id="start-test-btn">
-                <i class="fas fa-rocket" style="margin-right: 10px;"></i>
-                Begin Your Journey
-                <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                <i class="fas fa-play-circle" style="margin-right: 12px;"></i>
+                Launch Elite Test
+                <i class="fas fa-arrow-right" style="margin-left: 12px;"></i>
             </button>
         </div>
     </div>
@@ -1183,34 +1209,31 @@
         const TOTAL_QUESTIONS = 75; // 75 questions
         const TEST_DURATION = 3 * 60 * 60; // 3 hours in seconds (180 minutes)
         
-        // CORRECTED Integer type question ranges
-        // Based on answer key: 
-        // Q21-25 have integer answers (8.0, 6, 2.0, 48, 18)
-        // Q46-50 have integer answers (140, 2.0, 8, 2.0, 5)
-        // Q71-75 have integer answers (4, 6, 2, 6, 2)
+        // Integer type question ranges (unchanged)
         const INTEGER_QUESTIONS = [
             [21, 25],  // Questions 21-25 (integer)
-            [46, 50],  // Questions 46-50 (integer) - CORRECTED: was [45,50]  
+            [46, 50],  // Questions 46-50 (integer)
             [71, 75]   // Questions 71-75 (integer)
         ];
         
-        // UPDATED ANSWER KEY - 75 answers (provided by you)
+        // UPDATED ANSWER KEY - Based on your new input
         const ANSWER_KEY = [
             // Q1-20 (MCQ)
-            'B', 'B', 'B', 'B', 'C', 'A', 'D', 'C', 'C', 'C',
-            'D', 'B', 'D', 'B', 'C', 'C', 'D', 'D', 'B', 'C',
+            'D', 'D', 'A', 'C', 'B', 'C', 'D', 'A', 'B', 'C',
+            'C', 'A', 'B', 'A', 'A', 'C', 'C', 'C', 'D', 'C',
             // Q21-25 (Integer)
-            8.0, 6, 2.0, 48, 18,
+            125, 6, 2, 3, 4,
             // Q26-45 (MCQ)
-            'A', 'A', 'D', 'C', 'C', 'B', 'A', 'B', 'D', 'B',
-            'B', 'C', 'C', 'A', 'A', 'A', 'A', 'B', 'A', 'D',
-            // Q46-50 (Integer) - Q46 is integer (140), not MCQ 'B'
-            140, 2.0, 8, 2.0, 5,
+            'D', 'B', 'D', 'D', 'B', 'B', 'A', 'D', 'C', 8,
+            'D', 4.65, 'D', 2, 55, 1, 6, 10, 9, 240,
+            // Note: Some of these might be integer types - will need clarification
+            // Q46-50 (should be integer range)
+            'D', 'B', 'A', 'A', 'B',
             // Q51-70 (MCQ)
-            'B', 'D', 'D', 'A', 'B', 'B', 'C', 'C', 'A', 'D',
-            'C', 'A', 'B', 'D', 'C', 'D', 'C', 'B', '8', 'B',
-            // Q71-75 (Integer)
-            4, 6, 2, 6, 2
+            'C', 'B', 'A', 10, 'C', 'D', 'B', 'D', 'C', 'D',
+            'A', 'B', 100, 7, 5, 1, 5, '?', '?', '?',
+            // Q71-75 (Integer) - Need last 5 values
+            4, 6, 2, 6, 2  // Keeping original as placeholder
         ];
         
         // Store user answers and status
@@ -1225,24 +1248,24 @@
         // Create floating particles for welcome page
         function createParticles() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                const size = Math.random() * 10 + 5;
+                const size = Math.random() * 15 + 5;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = Math.random() * 100 + 'vw';
                 particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.opacity = Math.random() * 0.6 + 0.2;
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
                 
-                // Random colors for particles
+                // Gold-colored particles
                 const colors = [
-                    'rgba(255, 255, 255, 0.8)',
-                    'rgba(255, 107, 107, 0.6)',
-                    'rgba(78, 205, 196, 0.6)',
-                    'rgba(69, 183, 209, 0.6)',
-                    'rgba(150, 206, 180, 0.6)'
+                    'rgba(255, 215, 0, 0.6)',
+                    'rgba(255, 255, 255, 0.4)',
+                    'rgba(255, 215, 0, 0.3)',
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(255, 223, 0, 0.4)'
                 ];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
